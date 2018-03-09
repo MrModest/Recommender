@@ -1,0 +1,59 @@
+﻿@model IEnumerable<Movie>
+@{
+    ViewData["Title"] = "Home";
+}
+
+<!-- banner -->
+<div id="slidey" style="display:none;">
+    <ul>
+        @foreach (var movie in Model)
+        {
+            <li>
+                <img src="http://image.tmdb.org/t/p/original/@movie.BackdropPath" alt=" ">
+                <p class='title'>@movie.Title</p><p class='description'>@movie.Overview</p>
+            </li>
+        }
+    </ul>
+</div>
+<script src="js/jquery.slidey.js"></script>
+<script src="js/jquery.dotdotdot.min.js"></script>
+<script type="text/javascript">
+    $("#slidey").slidey({
+        interval: 8000,
+        listCount: 5,
+        autoplay: false,
+        showList: true
+    });
+    $(".slidey-list-description").dotdotdot();
+</script>
+<!-- //banner -->
+<!-- bloc 1 -->
+<div class="banner-bottom">
+    <h4 class="latest-text w3_latest_text">Рекомендованные фильмы</h4>
+    <div class="container">
+        <div class="w3_agile_banner_bottom_grid">
+            <div id="owl-demo" class="owl-carousel owl-theme">
+                @foreach (var movie in Model)
+                {
+                    @Html.Partial("MovieBlock", movie)
+                }
+            </div>
+        </div>
+    </div>
+</div>
+<!-- //block 1 -->
+<!-- block 2 -->
+<div class="banner-bottom">
+    <h4 class="latest-text w3_latest_text">Оцените новые фильмы</h4>
+    <div class="container">
+        <div class="w3_agile_banner_bottom_grid">
+            <div id="owl-demo-2" class="owl-carousel owl-theme">
+                @foreach (var movie in Model)
+                {
+                    @Html.Partial("MovieBlock", movie)
+                }
+            </div>
+        </div>
+    </div>
+</div>
+<!-- //block 2 -->

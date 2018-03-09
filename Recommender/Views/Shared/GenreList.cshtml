@@ -1,0 +1,19 @@
+﻿@using Recommender.Infrastructure;
+@inject IGenreRepository Rep
+
+<ul class="dropdown-menu multi-column columns-3">
+    <li>
+        @foreach (var list in Rep.Genres.Split(3))
+        {
+            <div class="col-sm-4">
+                <ul class="multi-column-dropdown">
+                    @foreach (var genre in list)
+                    {
+                        <li><a asp-controller="Movie" asp-action="Genre" asp-route-id="@genre.Id">@genre.RuName</a></li>
+                    }
+                </ul>
+            </div>
+        }
+        <div class="clearfix"></div>
+    </li>
+</ul>

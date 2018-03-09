@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27130.2010
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Recommender", "Recommender\Recommender.csproj", "{7BA57924-DB9A-44B9-8BC8-47CB2CF89812}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Recommender.Tests", "Recommender.Tests\Recommender.Tests.csproj", "{FDA61543-F0C0-40C8-A67F-989EC621BE15}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7BA57924-DB9A-44B9-8BC8-47CB2CF89812}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7BA57924-DB9A-44B9-8BC8-47CB2CF89812}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7BA57924-DB9A-44B9-8BC8-47CB2CF89812}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7BA57924-DB9A-44B9-8BC8-47CB2CF89812}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FDA61543-F0C0-40C8-A67F-989EC621BE15}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FDA61543-F0C0-40C8-A67F-989EC621BE15}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FDA61543-F0C0-40C8-A67F-989EC621BE15}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FDA61543-F0C0-40C8-A67F-989EC621BE15}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {24DE5B03-A108-4745-B415-9B87125FDC53}
+	EndGlobalSection
+EndGlobal

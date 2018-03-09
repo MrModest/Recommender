@@ -1,0 +1,45 @@
+﻿@model Movie
+
+<div class="container">
+    <div class="row">
+        <!--<h2 class="col-xs-12 h2">@Model.Title</h2>
+        <h4 class="col-xs-12 h4">@Model.OriginalTitle</h4>-->
+        <p class="movie-single-capture-main">@Model.Title</p>
+        <p class="movie-single-capture-second">@Model.OriginalTitle</p>
+    </div>
+    <div class="row">
+        <div class="col-md-3">
+            <img src="http://image.tmdb.org/t/p/original/@Model.PosterPath" alt="@Model.Title" class="img-responsive" />
+        </div>
+        <div class="bs-docs col-md-8">
+            <table class="table table-striped">
+                <tbody>
+                    <tr>
+                        <th>Год</th>
+                        <td>@Model.ReleaseDate?.Year</td>
+                    </tr>
+                    <tr>
+                        <th>Страна</th>
+                        <td> @String.Join(", ", Model.ProductionCountries)</td>
+                    </tr>
+                    <tr>
+                        <th>Слоган</th>
+                        <td>@Model.Tagline</td>
+                    </tr>
+                    <tr>
+                        <th>Жанры</th>
+                        <td>@Html.Partial("GenreLinkList", Model.Genres)</td>
+                    </tr>
+                    <tr>
+                        <th>Оценка</th>
+                        <td>@Model.VoteAverage (Проголосовало: @Model.VoteCount)</td>
+                    </tr>
+                    <tr>
+                        <th>Описание</th>
+                        <td>@Model.Overview</td>
+                    <tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

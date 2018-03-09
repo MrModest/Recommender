@@ -1,0 +1,9 @@
+﻿@model IEnumerable<int>
+@inject IGenreRepository Rep
+
+<h4>
+@foreach (var genre in Rep.Genres.Where(g => Model.Contains(g.Id)).ToList())
+{
+    <a asp-action="Genre" asp-controller="Movie" asp-route-genreId="@genre.Id" target="_blank" class="label label-default">@genre.RuName</a>  
+}
+</h4>

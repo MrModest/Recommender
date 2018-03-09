@@ -1,0 +1,15 @@
+﻿@model RegisterModel
+
+<form asp-controller="Account" asp-action="Register" asp-anti-forgery="true" method="post">
+    <div asp-validation-summary="All"></div>
+    <input type="hidden" asp-for="ReturnUrl" value="@ViewContext.HttpContext.Request.Path" />
+    <input type="text" asp-for="UserName" placeholder="Введите логин" required="" />
+    <span asp-validation-for="UserName" />
+    <input type="text" asp-for="Email" placeholder="Введите Email" required="" />
+    <span asp-validation-for="Email" />
+    <input asp-for="Password" placeholder="Введите пароль" required="" />
+    <span asp-validation-for="Password" />
+    <input asp-for="ConfirmPassword" placeholder="Повторите пароль" required="" />
+    <span asp-validation-for="ConfirmPassword" />
+    <input type="submit" value="Регистрация" />
+</form>
