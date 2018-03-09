@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Recommender.Models;
 
 namespace Recommender.Controllers
@@ -43,12 +44,18 @@ namespace Recommender.Controllers
                              .OrderByDescending(m => m.Popularity)
                              .Take(10));
 
-        public IActionResult Title(int titleId)
+        public async Task<IActionResult> Title(int titleId)
         {
-            var movie = repository.Movies.FirstOrDefault(m => m.Id == titleId);
+            var movie = await repository.Movies.FirstOrDefaultAsync(m => m.Id == titleId);
             if (movie == null) { return NotFound(); }
             return View(movie);
         }
 
+        public async Task<IActionResult> Genre(int genreId)
+        {
+            var movies = await repository.Movies.Where(m => m.Genres.Contains(genreId)).ToListAsync();
+            if (movies == null || movies.Count == 0) { return NotFound(); }
+            return View(movies);
+        }
     }
 }
