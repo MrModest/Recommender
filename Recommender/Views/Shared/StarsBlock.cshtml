@@ -1,0 +1,18 @@
+﻿@model double
+
+<div class="block-stars">
+    <ul class="w3l-ratings">
+        @for (int i = 0; i < Math.Truncate(Model / 2); i++)
+        {
+            <li><a href="#"><i class="fa fa-star" aria-hidden="true"></i></a></li>
+        }
+        @if (Model % 2 >= 0.5)
+        {
+            <li><a href="#"><i class="fa fa-star-half-o" aria-hidden="true"></i></a></li>
+        }
+        @for (int i = 0; i < Math.Truncate((10 - Model) / 2); i++)
+        {
+            <li><a href="#"><i class="fa fa-star-o" aria-hidden="true"></i></a></li>
+        }
+    </ul>
+</div>

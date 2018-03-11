@@ -172,7 +172,7 @@ ul#myTab {
   bottom: 0;
   left: 0;
   right: 0;
-  background:#000;
+  background:#e1e1e1;
   -webkit-transform: scaleX(0);
   transform: scaleX(0);
   -webkit-transform-origin: 50%;
@@ -348,12 +348,17 @@ ol.breadcrumb li a {
     margin-top: 1em;
     text-decoration: none;
     border: 1px solid #ddd;
-	    font-family: 'Roboto Condensed', sans-serif;
+	font-family: 'Roboto Condensed', sans-serif;
 }
 .blog-pagenat-wthree ul li a.frist,.blog-pagenat-wthree ul li a.last {
     background: #000;
 	color:#fff;
-	 border: 1px solid #29292A;
+	border: 1px solid #29292A;
+}
+.blog-pagenat-wthree ul li a.active {
+    background: #fff;
+    color: #29292A;
+    border: 1px solid #29292A;
 }
 .blog-pagenat-wthree ul li a:hover {
     background: #29292A;

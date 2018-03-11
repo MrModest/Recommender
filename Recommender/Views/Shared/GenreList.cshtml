@@ -9,7 +9,7 @@
                 <ul class="multi-column-dropdown">
                     @foreach (var genre in list)
                     {
-                        <li><a asp-controller="Movie" asp-action="Genre" asp-route-id="@genre.Id">@genre.RuName</a></li>
+                        <li><a asp-controller="Movie" asp-action="Genre" asp-route-genreId="@genre.Id">@genre.RuName</a></li>
                     }
                 </ul>
             </div>

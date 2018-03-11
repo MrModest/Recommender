@@ -35,7 +35,7 @@
             <div id="owl-demo" class="owl-carousel owl-theme">
                 @foreach (var movie in Model)
                 {
-                    @Html.Partial("MovieBlock", movie)
+                    @Html.Partial("MovieInCarouselBlock", movie)
                 }
             </div>
         </div>
@@ -50,7 +50,7 @@
             <div id="owl-demo-2" class="owl-carousel owl-theme">
                 @foreach (var movie in Model)
                 {
-                    @Html.Partial("MovieBlock", movie)
+                    @Html.Partial("MovieInCarouselBlock", movie)
                 }
             </div>
         </div>

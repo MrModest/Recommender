@@ -1,34 +1,22 @@
 ﻿@model Movie
 
-<div class="item">
-    <div class="w3l-movie-gride-agile w3l-movie-gride-agile1">
-        <a asp-action="Title" asp-controller="Movie" asp-route-titleId="@Model.Id" class="hvr-shutter-out-horizontal">
-            <img src="http://image.tmdb.org/t/p/w185/@Model.PosterPath" title="@Model.Title" class="img-responsive" alt="@Model.Title" />
-            <div class="w3l-action-icon"><i class="fa fa-play-circle" aria-hidden="true"></i></div>
-        </a>
-        <div class="mid-1 agileits_w3layouts_mid_1_home">
-            <div class="w3l-movie-text" style="min-height:37px">
-                <h6><a asp-action="Title" asp-controller="Movie" asp-route-titleId="@Model.Id">@Model.Title</a></h6>
-            </div>
-            <div class="mid-2 agile_mid_2_home">
-                <p>@Model.ReleaseDate?.Year</p>
-                <div class="block-stars">
-                    <ul class="w3l-ratings">
-                        @for (int i = 0; i < Math.Truncate(Model.VoteAverage / 2); i++)
-                        {
-                            <li><a href="#"><i class="fa fa-star" aria-hidden="true"></i></a></li>
-                        }
-                        @if (Model.VoteAverage % 2 >= 0.5) { 
-                            <li><a href="#"><i class="fa fa-star-half-o" aria-hidden="true"></i></a></li>
-                        }
-                        @for (int i = 0; i < Math.Truncate((10 - Model.VoteAverage) / 2); i++)
-                        {
-                            <li><a href="#"><i class="fa fa-star-o" aria-hidden="true"></i></a></li>
-                        }
-                    </ul>
-                </div>
-                <div class="clearfix"></div>
-            </div>
+<div class="col-md-2 w3l-movie-gride-agile">
+    <a asp-action="Title" asp-controller="Movie" asp-route-titleId="@Model.Id" class="hvr-shutter-out-horizontal">
+        <img src="http://image.tmdb.org/t/p/w185/@Model.PosterPath" title="@Model.Title" class="img-responsive" alt="@Model.Title" />
+        <div class="w3l-action-icon"><i class="fa fa-play-circle" aria-hidden="true"></i></div>
+    </a>
+    <div class="mid-1">
+        <div class="w3l-movie-text" style="min-height:60px">
+            <h6><a asp-action="Title" asp-controller="Movie" asp-route-titleId="@Model.Id">@Model.Title</a></h6>
         </div>
+        <div class="mid-2">
+
+            <p>@Model.ReleaseDate?.Year</p>
+            @Html.Partial("StarsBlock", Model.VoteAverage)
+            <div class="clearfix"></div>
+        </div>
+    </div>
+    <div class="ribben two">
+        <p>NEW!</p>
     </div>
 </div>

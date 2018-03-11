@@ -1,3 +1,55 @@
-﻿@model IEnumerable<Movie>
+﻿@model MovieOfGenreViewModel
+@addTagHelper "*, Recommender"
 
+<div class="general-agileits-w3l">
+    <div class="w3l-medile-movies-grids">
+        <!-- /movie-browse-agile -->
 
+        <div class="movie-browse-agile">
+            <!--/browse-agile-w3ls -->
+            <div class="browse-agile-w3ls general-w3ls">
+                <div class="tittle-head">
+                    <h4 class="latest-text">@Model.Genre.RuName</h4>
+                    <!---728x90--->
+                    <div class="container">
+                        <div class="agileits-single-top">
+                            <ol class="breadcrumb">
+                                <li><a asp-action="Index" asp-controller="Movie">Home</a></li>
+                                <li class="active">Genres</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+                <!---728x90--->
+                <div class="container">
+                    <div class="browse-inner">
+                        @foreach (var movie in Model.Movies)
+                        {
+                            @Html.Partial("MovieBlock", movie)
+                        }
+
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+            </div>
+            <!--//browse-agile-w3ls -->
+            <!--<div class="blog-pagenat-wthree">
+                <ul>
+                    <li><a class="frist" href="#">Prev</a></li>
+                    <li><a href="#">1</a></li>
+                    <li><a href="#">2</a></li>
+                    <li><a href="#">3</a></li>
+                    <li><a href="#">4</a></li>
+                    <li><a href="#">5</a></li>
+                    <li><a class="last" href="#">Next</a></li>
+                </ul>
+            </div>-->
+            <div page-model="@Model.PagingInfo" page-action="Genre" page-url-genreId="@Model.Genre.Id"></div>
+        </div>
+        <!-- //movie-browse-agile -->
+        <!--body wrapper start-->
+        <!--body wrapper start-->
+
+    </div>
+    <!-- //w3l-medile-movies-grids -->
+</div>
