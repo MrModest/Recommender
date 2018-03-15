@@ -16,7 +16,10 @@
             <div class="clearfix"></div>
         </div>
     </div>
-    <div class="ribben two">
-        <p>NEW!</p>
-    </div>
+    @if (Math.Abs((Model.ReleaseDate - DateTime.Now).Value.TotalDays) < 30)
+    {
+        <div class="ribben two">
+            <p>NEW!</p>
+        </div>
+    }
 </div>

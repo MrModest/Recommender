@@ -1,16 +1,32 @@
-﻿@model IdentityUser<int>
+﻿@model ProfileViewModel
 
 
 <link rel="stylesheet" href="~/css/fb-profile.css" type="text/css" media="all" />
-@if (Model != null)
+@if (Model != null || Model.User != null)
 {
     <div class="container">
         <div class="fb-profile">
-            <img align="left" class="fb-image-lg" src="http://lorempixel.com/850/280/nightlife/5/" alt="Profile image example" />
-            <img align="left" class="fb-image-profile thumbnail" src="http://lorempixel.com/180/180/people/9/" alt="Profile image example" />
+            <img align="left" class="fb-image-lg" src="~/images/3.jpg" alt="Profile banner" />
+            <img align="left" class="fb-image-profile thumbnail" src="~/images/user.jpg" alt="Avatar" />
             <div class="fb-profile-text">
-                <h1>@Model.UserName</h1>
-                <p>@Model.Email</p>
+                <h1>@Model.User.UserName</h1>
+                <p>@Model.User.Email</p>
+            </div>
+        </div>
+        <hr />
+        <div>
+            <div class="tittle-head">
+                <h4 class="latest-text-profile">Оценённые фильмы</h4>
+            </div>
+            <div class="container">
+                <div class="browse-inner" data-movie_count="@Model.UserMovies.Count()">
+                    @foreach (var movie in Model.UserMovies)
+                    {
+                        @Html.Partial("MovieBlock", movie)
+                    }
+
+                    <div class="clearfix"></div>
+                </div>
             </div>
         </div>
     </div>

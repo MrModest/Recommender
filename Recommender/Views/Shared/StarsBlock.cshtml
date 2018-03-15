@@ -1,6 +1,7 @@
-﻿@model double
+﻿@model double /* movie.VoteAvarage */
+@inject IUserRateRepository Rep
 
-<div class="block-stars">
+<div class="block-stars" data-score="0" data-user_set="false">
     <ul class="w3l-ratings">
         @for (int i = 0; i < Math.Truncate(Model / 2); i++)
         {

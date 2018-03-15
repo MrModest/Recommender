@@ -41,8 +41,9 @@ namespace Recommender
                 .AddEntityFrameworkStores<AppIdentityDbContext>()
                 .AddDefaultTokenProviders();
 
-            services.AddTransient<IMovieRepository, EFMovieRepository>();
-            services.AddTransient<IGenreRepository, EFGenreRepository>();
+            services.AddTransient<IMovieRepository,    EFMovieRepository>();
+            services.AddTransient<IGenreRepository,    EFGenreRepository>();
+            services.AddTransient<IUserRateRepository, EFUserRateRepository>();
             services.AddMvc();
             services.AddMemoryCache();
             services.AddSession();

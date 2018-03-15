@@ -297,6 +297,15 @@ h4.latest-text {
     padding: 0.3em 0.5em;
     margin-left: 3em;
 }
+h4.latest-text-profile {
+    border-left: 5px solid #ff8d1b;
+    font-size: 2em;
+    color: #212121;
+    text-transform: uppercase;
+    margin-top: 3em;
+    margin-bottom: 1em;
+    padding: 0.3em 0.5em;
+}
 .review-slider {
     margin: 1.4em 0 1.4em 0;
 }

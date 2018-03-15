@@ -15,14 +15,18 @@ namespace Recommender.Infrastructure
     public class PageLinkTagHelper : TagHelper
     {
         private IUrlHelperFactory urlHelperFactory;
+
         public PageLinkTagHelper(IUrlHelperFactory helperFactory)
         {
             urlHelperFactory = helperFactory;
         }
+
         [ViewContext]
         [HtmlAttributeNotBound]
         public ViewContext ViewContext { get; set; }
+
         public PagingInfo PageModel { get; set; }
+
         public string PageAction { get; set; }
 
         [HtmlAttributeName(DictionaryAttributePrefix = "page-url-")]

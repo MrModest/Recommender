@@ -17,11 +17,18 @@ namespace Recommender.Controllers
     {
         private UserManager<IdentityUser<int>> userManager;
         private SignInManager<IdentityUser<int>> signInManager;
+        private IUserRateRepository userRateRep;
+        private IMovieRepository movieRep;
 
-        public AccountController(UserManager<IdentityUser<int>> userManager, SignInManager<IdentityUser<int>> signInManager)
+        public AccountController(UserManager<IdentityUser<int>>   userManager, 
+                                 SignInManager<IdentityUser<int>> signInManager, 
+                                 IUserRateRepository              userRateRep,
+                                 IMovieRepository                 movieRep)
         {
             this.userManager = userManager;
             this.signInManager = signInManager;
+            this.userRateRep = userRateRep;
+            this.movieRep = movieRep;
         }
 
         [HttpGet]
@@ -108,7 +115,18 @@ namespace Recommender.Controllers
         {
             var user = await userManager.FindByNameAsync(userName);
             if (user == null) { return NotFound(); }
-            return View(user);
+
+            var userRates = await userRateRep.GetUserRatesByUser(user.Id).ToListAsync();
+
+            //var movies = await movieRep.Movies.Where(m => userRates.Select(ur => ur.TitleId).Contains(m.Id)).ToListAsync();
+
+            var movies = await movieRep.Movies.Take(10).ToListAsync();
+
+            return View(new ProfileViewModel {
+                User = user,
+                UserRates = userRates,
+                UserMovies = movies
+            });
         }
     }
 }

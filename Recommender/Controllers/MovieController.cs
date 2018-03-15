@@ -65,8 +65,7 @@ namespace Recommender.Controllers
 
             var pagingInfo = new PagingInfo(count, 24, page);
 
-            var movies = await movieRep.Movies
-                .Where(m => m.Genres.Contains(genreId))
+            var movies = await movieRep.GetMoviesByGenre(genreId)
                 .OrderByDescending(m => m.Popularity)
                 .Skip((page - 1) * pagingInfo.ItemsPerPage)
                 .Take(pagingInfo.ItemsPerPage)

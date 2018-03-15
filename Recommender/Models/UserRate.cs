@@ -13,6 +13,14 @@ namespace Recommender.Models
 
         public UserRate() { }
 
+        public UserRate(int userId, int titleId, int score, string review = null)
+        {
+            this.UserId = userId;
+            this.TitleId = titleId;
+            this.Score = score;
+            this.Review = review;
+        }
+
         [JsonProperty("id")]
         [Key, Column("id")]
         public int Id { get; set; }
