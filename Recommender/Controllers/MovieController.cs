@@ -21,13 +21,14 @@ namespace Recommender.Controllers
             this.genreRep = genreRep;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View(movieRep.Movies
+            return View(await movieRep.Movies
                                     .Where(m => m.ReleaseDate.HasValue && m.ReleaseDate.Value.Year > (DateTime.Now.Year - 2))
                                     .Where(m => m.VoteCount > 100)
                                     .OrderByDescending(m => m.VoteAverage)
-                                    .Take(10));
+                                    .Take(10)
+                                    .ToListAsync());
 
             //var movies = repository.Movies
             //                        .Where(m => m.ReleaseDate.HasValue && m.ReleaseDate.Value.Year == DateTime.Now.Year)
@@ -42,11 +43,12 @@ namespace Recommender.Controllers
 
         }
 
-        public ViewResult List() => 
-            View(movieRep.Movies
+        public async Task<IActionResult> List() => 
+            View(await movieRep.Movies
                              .Where(m => m.PosterPath != null && m.ReleaseDate.HasValue && m.ReleaseDate.Value.Year == DateTime.Now.Year)
                              .OrderByDescending(m => m.Popularity)
-                             .Take(10));
+                             .Take(10)
+                             .ToListAsync());
 
         public async Task<IActionResult> Title(int titleId)
         {
@@ -72,11 +74,14 @@ namespace Recommender.Controllers
                 .ToListAsync();
 
             if (movies == null || movies.Count == 0) { return NotFound(); }
+
             return View(new MovieOfGenreViewModel {
                 Genre = genre,
                 Movies = movies,
                 PagingInfo = pagingInfo
             });
         }
+
+        public IActionResult Test() => View();
     }
 }

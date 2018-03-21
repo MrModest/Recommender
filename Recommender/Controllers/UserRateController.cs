@@ -30,6 +30,8 @@ namespace Recommender.Controllers
 
             if (user == null) { return Unauthorized(); }
 
+            if (model == null) { return NotFound(); }
+
             UserRate userRate = await repository.GetUserRateByUserAndTitleAsync(user.Id, model.TitleId);
 
             if (userRate == null || userRate?.Id == 0)

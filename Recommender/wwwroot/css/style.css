@@ -1516,6 +1516,7 @@ h3.head {
 	}
 }
 
+
 .movie-single-capture-main {
     font-size: 2.5em;
     font-weight: bold;
@@ -1529,3 +1530,37 @@ h3.head {
     margin-bottom: 0.1em;
     margin-left: 0.6em;
 }
+
+
+/* rate stars */
+.star-half{
+    height: 20px;
+    width: 10px!important;
+}
+
+.star-half:last-child{ /* margin between stars */
+    margin-right: 3px;
+}
+
+.star-half > svg{
+    enable-background:new 0 0 8.7 16.7;
+}
+
+.star-half-left { /* left half-star */
+    fill: none;
+    stroke: #000;
+    stroke-width: 0.5;
+}
+
+.star-half-right { /* right half-star */
+    fill: none;
+    stroke: #000;
+    stroke-width: 0.5;
+    transform: scaleY(-1) rotate(180deg);
+    transform-origin: center;
+}
+
+.w3l-ratings > li{
+    display: inline-flex!important;
+}
+/* /rate stars */

@@ -12,7 +12,7 @@
         <div class="mid-2">
 
             <p>@Model.ReleaseDate?.Year</p>
-            @Html.Partial("StarsBlock", Model.VoteAverage)
+            <stars-block title-id="@Model.Id" score="@(int)Math.Round(Model.VoteAverage)" default="true" action-url="http://localhost:32121/UserRate/Rate"></stars-block>
             <div class="clearfix"></div>
         </div>
     </div>
