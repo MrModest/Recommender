@@ -7,7 +7,7 @@
 <form asp-action="Login" asp-controller="Account" asp-anti-forgery="true">
     <div class="validation" asp-validation-summary="ModelOnly" />
     <div>
-        <input type="hidden" asp-for="ReturnUrl" />
+        <input type="hidden" asp-for="ReturnUrl" value="@ViewContext.HttpContext.Request.Path/@ViewContext.HttpContext.Request.QueryString" />
         <div class="form-group">
             <label asp-for="UserName">Введите логин</label>
             <input type="text" asp-for="UserName" />

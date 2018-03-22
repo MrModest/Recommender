@@ -6,7 +6,7 @@
     <div asp-validation-summary="All"></div>
     <div class="validation" asp-validation-summary="ModelOnly" />
     <div>
-        <input type="hidden" asp-for="ReturnUrl" />
+        <input type="hidden" asp-for="ReturnUrl" value="@ViewContext.HttpContext.Request.Path/@ViewContext.HttpContext.Request.QueryString" />
         <div>
             <label asp-for="Email">Введите Email</label><br />
             <input type="text" asp-for="Email" />

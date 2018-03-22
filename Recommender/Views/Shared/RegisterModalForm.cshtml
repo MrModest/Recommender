@@ -2,7 +2,7 @@
 
 <form asp-controller="Account" asp-action="Register" asp-anti-forgery="true" method="post">
     <div asp-validation-summary="All"></div>
-    <input type="hidden" asp-for="ReturnUrl" value="@ViewContext.HttpContext.Request.Path" />
+    <input type="hidden" asp-for="ReturnUrl" value="@ViewContext.HttpContext.Request.Path/@ViewContext.HttpContext.Request.QueryString" />
     <input type="text" asp-for="UserName" placeholder="Введите логин" required="" />
     <span asp-validation-for="UserName" />
     <input type="text" asp-for="Email" placeholder="Введите Email" required="" />
