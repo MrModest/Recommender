@@ -14,18 +14,20 @@ namespace Recommender.Infrastructure
 {
     public class StarsBlockTagHelper : TagHelper
     {
-        //private IUrlHelperFactory urlHelperFactory;
+        private IUrlHelperFactory urlHelperFactory;
 
-        //public StarsBlockTagHelper(IUrlHelperFactory helperFactory)
-        //{
-        //    this.urlHelperFactory = helperFactory;
-        //}
+        public StarsBlockTagHelper(IUrlHelperFactory helperFactory)
+        {
+            this.urlHelperFactory = helperFactory;
+        }
 
-        //[ViewContext]
-        //[HtmlAttributeNotBound]
-        //public ViewContext ViewContext { get; set; }
+        [ViewContext]
+        [HtmlAttributeNotBound]
+        public ViewContext ViewContext { get; set; }
 
-        public string ActionUrl { get; set; }
+        public string RateAction { get; set; }
+
+        public string RateController { get; set; }
 
         public int TitleId { get; set; }
 
@@ -35,11 +37,11 @@ namespace Recommender.Infrastructure
 
         public override void Process(TagHelperContext context, TagHelperOutput output)
         {
-            //IUrlHelper urlHelper = urlHelperFactory.GetUrlHelper(ViewContext);
+            IUrlHelper urlHelper = urlHelperFactory.GetUrlHelper(ViewContext);
 
             output.TagName = "div";
             output.Attributes.Add("class",         "block-stars");
-            output.Attributes.Add("data-rate_url", ActionUrl);
+            output.Attributes.Add("data-rate_url", urlHelper.Action(RateAction, RateController, null));
             output.Attributes.Add("data-title_id", TitleId);
             output.Attributes.Add("data-score",    Score);
             output.Attributes.Add("data-default",  Default.ToString().ToLower());

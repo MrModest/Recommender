@@ -9,14 +9,14 @@ namespace Recommender.Models
     {
         IQueryable<UserRate> UserRates { get; }
 
-        void Add(UserRate userRate);
-        Task AddAsync(UserRate userRate);
+        UserRate Add(UserRate userRate);
+        Task<UserRate> AddAsync(UserRate userRate);
 
-        void Add(int userId, int titleId, int score, string review = null);
-        Task AddAsync(int userId, int titleId, int score, string review = null);
+        UserRate Add(int userId, int titleId, int score, string review = null);
+        Task<UserRate> AddAsync(int userId, int titleId, int score, string review = null);
 
-        void Update(UserRate userRate);
-        Task UpdateAsync(UserRate userRate);
+        UserRate Update(UserRate userRate);
+        Task<UserRate> UpdateAsync(UserRate userRate);
 
         IQueryable<UserRate> GetUserRatesByUser(int userId);
 

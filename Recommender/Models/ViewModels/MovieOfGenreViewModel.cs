@@ -7,7 +7,7 @@ namespace Recommender.Models.ViewModels
 {
     public class MovieOfGenreViewModel
     {
-        public IEnumerable<Movie> Movies { get; set; }
+        public IEnumerable<UserMovie> UserMovies { get; set; }
         public Genre Genre { get; set; }
         public PagingInfo PagingInfo { get; set; }
     }

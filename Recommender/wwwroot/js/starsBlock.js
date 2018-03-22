@@ -9,18 +9,6 @@ COLORS = {
 };
 
 
-$(document).ready(function() {
-	var blocks = $('.block-stars');
-
-	for (var i = 0; i < blocks.length; i++) {
-		var currentScore = blocks[i].getAttribute('data-score');
-		var isDefault = blocks[i].getAttribute('data-default');
-
-		colorStars(currentScore, blocks[i].querySelector('ul'), (isDefault) ? COLORS.default : COLORS.rated);
-	}
-});
-
-
 /* 
 function coloring stars
 args
@@ -47,10 +35,19 @@ function colorStars(rate, starTarget, color) {
 	}
 }
 
+$(document).ready(function () {
+	var blocks = $('.block-stars');
+
+	for (var i = 0; i < blocks.length; i++) {
+		var currentScore = blocks[i].getAttribute('data-score');
+		var isDefault = blocks[i].getAttribute('data-default');
+		colorStars(currentScore, blocks[i].querySelector('ul'), (isDefault == "true") ? COLORS.default : COLORS.rated);
+	}
+});
+
 /* coloring stars on mouse moving */
 $('.star-half').mouseover(function (event) {
 	var rate = event.currentTarget.getAttribute('data-star_half_id')
-	console.log('rate');
 	colorStars(rate, event.currentTarget, COLORS.hovered);
 
 });
@@ -58,8 +55,7 @@ $('.star-half').mouseover(function (event) {
 $('.block-stars').mouseleave(function (event) {
 	var currentScore = event.currentTarget.getAttribute('data-score');
 	var isDefault = event.currentTarget.closest(".block-stars").getAttribute('data-default');
-
-	colorStars(currentScore, event.target, (isDefault=="true") ? COLORS.default : COLORS.rated);
+	colorStars(currentScore, event.target, (isDefault == "true") ? COLORS.default : COLORS.rated);
 
 });
 

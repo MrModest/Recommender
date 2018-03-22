@@ -1,22 +1,26 @@
-﻿@model Movie
+﻿@model UserMovie
 
 <div class="col-md-2 w3l-movie-gride-agile">
-    <a asp-action="Title" asp-controller="Movie" asp-route-titleId="@Model.Id" class="hvr-shutter-out-horizontal">
-        <img src="http://image.tmdb.org/t/p/w185/@Model.PosterPath" title="@Model.Title" class="img-responsive" alt="@Model.Title" />
+    <a asp-action="Title" asp-controller="Movie" asp-route-titleId="@Model.Movie.Id" class="hvr-shutter-out-horizontal">
+        <img src="http://image.tmdb.org/t/p/w185/@Model.Movie.PosterPath" title="@Model.Movie.Title" class="img-responsive" alt="@Model.Movie.Title" />
         <div class="w3l-action-icon"><i class="fa fa-play-circle" aria-hidden="true"></i></div>
     </a>
     <div class="mid-1">
         <div class="w3l-movie-text" style="min-height:60px">
-            <h6><a asp-action="Title" asp-controller="Movie" asp-route-titleId="@Model.Id">@Model.Title</a></h6>
+            <h6><a asp-action="Title" asp-controller="Movie" asp-route-titleId="@Model.Movie.Id">@Model.Movie.Title</a></h6>
         </div>
         <div class="mid-2">
 
-            <p>@Model.ReleaseDate?.Year</p>
-            <stars-block title-id="@Model.Id" score="@(int)Math.Round(Model.VoteAverage)" default="true" action-url="http://localhost:32121/UserRate/Rate"></stars-block>
+            <p>@Model.Movie.ReleaseDate?.Year</p>
+            <stars-block title-id="@Model.Movie.Id" 
+                         score="@{(Model.NotRated) ? (int)Math.Round(Model.Movie.VoteAverage) : Model.UserScore}" 
+                         default="@Model.NotRated" 
+                         rate-action="Rate" rate-controller="UserRate">
+            </stars-block>
             <div class="clearfix"></div>
         </div>
     </div>
-    @if (Math.Abs((Model.ReleaseDate - DateTime.Now).Value.TotalDays) < 30)
+    @if (Math.Abs((Model.Movie.ReleaseDate - DateTime.Now).Value.TotalDays) < 30)
     {
         <div class="ribben two">
             <p>NEW!</p>

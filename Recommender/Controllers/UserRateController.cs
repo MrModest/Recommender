@@ -40,6 +40,7 @@ namespace Recommender.Controllers
             }
             else
             {
+                userRate.Score = model.Score;
                 await repository.UpdateAsync(userRate);
             }
             

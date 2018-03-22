@@ -19,40 +19,60 @@ namespace Recommender.Models
 
         //+++ Add UserRate
 
-        public void Add(UserRate userRate)
+        public UserRate Add(UserRate userRate)
         {
             context.UserRates.Add(userRate);
             context.SaveChanges();
+
+            return userRate;
         }
 
-        public async Task AddAsync(UserRate userRate)
+        public async Task<UserRate> AddAsync(UserRate userRate)
         {
             context.UserRates.Add(userRate);
             await context.SaveChangesAsync();
+
+            return userRate;
         }
 
-        public void Add(int userId, int titleId, int score, string review = null)
+        public UserRate Add(int userId, int titleId, int score, string review = null)
         {
-            Add(new UserRate(userId, titleId, score));
+            return Add(new UserRate(userId, titleId, score));
         }
 
-        public async Task AddAsync(int userId, int titleId, int score, string review = null)
+        public async Task<UserRate> AddAsync(int userId, int titleId, int score, string review = null)
         {
-            await AddAsync(new UserRate(userId, titleId, score));
+            return await AddAsync(new UserRate(userId, titleId, score));
         }
 
         //+++ Update UserRate
 
-        public void Update(UserRate userRate)
+        public UserRate Update(UserRate userRate)
         {
-            context.UserRates.Update(userRate);
+            context.Attach(userRate).State = EntityState.Modified;
+            //context.UserRates.Attach(userRate);
+            //var entry = context.Entry(userRate);
+            //entry.Property(e => e.Score).IsModified = true;
+            //entry.Property(e => e.Review).IsModified = true;
             context.SaveChanges();
+
+            return userRate;
         }
 
-        public async Task UpdateAsync(UserRate userRate)
+        public async Task<UserRate> UpdateAsync(UserRate userRate)
         {
+            //context.Attach(userRate).State = EntityState.Modified;
+            //context.UserRates.Attach(userRate);
+            //var entry = context.Entry(userRate);
+            //entry.Property(e => e.Score).IsModified = true;
+            //entry.Property(e => e.Review).IsModified = true;
+
+            //var rate = context.UserRates.Find(userRate.Id); //.FirstOrDefault(ur => ur.Id == userRate.Id);
+            //rate.Score = userRate.Score;
             context.UserRates.Update(userRate);
             await context.SaveChangesAsync();
+
+            return userRate;
         }
 
         //+++ Help Methods

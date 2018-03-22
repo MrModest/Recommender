@@ -1,24 +1,28 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Recommender.Models;
 using Recommender.Models.ViewModels;
+using Recommender.Infrastructure;
 
 namespace Recommender.Controllers
 {
     public class MovieController : Controller
     {
-        private IMovieRepository movieRep;
-        private IGenreRepository genreRep;
+        private IMovieRepository    movieRep;
+        private IGenreRepository    genreRep;
+        private IUserRateRepository userRateRep;
 
-        public MovieController(IMovieRepository movieRep, IGenreRepository genreRep)
+        public MovieController(IMovieRepository movieRep, IGenreRepository genreRep, IUserRateRepository userRateRep)
         {
             this.movieRep = movieRep;
             this.genreRep = genreRep;
+            this.userRateRep = userRateRep;
         }
 
         public async Task<IActionResult> Index()
@@ -75,9 +79,16 @@ namespace Recommender.Controllers
 
             if (movies == null || movies.Count == 0) { return NotFound(); }
 
+            List<UserRate> userRates = null;
+            if (User.Identity.IsAuthenticated)
+            {
+                var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+                userRates = await userRateRep.GetUserRatesByUser(userId).ToListAsync();
+            }
+
             return View(new MovieOfGenreViewModel {
                 Genre = genre,
-                Movies = movies,
+                UserMovies = movies.GetUserMovies(userRates),
                 PagingInfo = pagingInfo
             });
         }
