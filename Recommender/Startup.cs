@@ -12,6 +12,7 @@ using Recommender.Models;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Routing;
 
 namespace Recommender
 {
@@ -37,13 +38,14 @@ namespace Recommender
                 options.UseNpgsql(
                     Configuration["Data:Identity:ConnectionString"]));
 
-            services.AddIdentity<IdentityUser<int>, IdentityRole<int>>()
+            services.AddIdentity<ApplicationUser, IdentityRole<int>>()
                 .AddEntityFrameworkStores<AppIdentityDbContext>()
                 .AddDefaultTokenProviders();
 
             services.AddTransient<IMovieRepository,    EFMovieRepository>();
             services.AddTransient<IGenreRepository,    EFGenreRepository>();
             services.AddTransient<IUserRateRepository, EFUserRateRepository>();
+            services.Configure<RouteOptions>(options => options.LowercaseUrls = true);
             services.AddMvc();
             services.AddMemoryCache();
             services.AddSession();

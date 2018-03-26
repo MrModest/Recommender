@@ -10,25 +10,20 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Recommender.Models;
 using Recommender.Models.ViewModels;
 using Microsoft.AspNetCore.Identity;
+using Recommender.Infrastructure;
 
 namespace Recommender.Controllers
 {
     public class AccountController : Controller
     {
-        private UserManager<IdentityUser<int>> userManager;
-        private SignInManager<IdentityUser<int>> signInManager;
-        private IUserRateRepository userRateRep;
-        private IMovieRepository movieRep;
+        private UserManager<ApplicationUser> userManager;
+        private SignInManager<ApplicationUser> signInManager;
 
-        public AccountController(UserManager<IdentityUser<int>>   userManager, 
-                                 SignInManager<IdentityUser<int>> signInManager, 
-                                 IUserRateRepository              userRateRep,
-                                 IMovieRepository                 movieRep)
+        public AccountController(UserManager<ApplicationUser>   userManager, 
+                                 SignInManager<ApplicationUser> signInManager)
         {
             this.userManager = userManager;
             this.signInManager = signInManager;
-            this.userRateRep = userRateRep;
-            this.movieRep = movieRep;
         }
 
         [HttpGet]
@@ -45,7 +40,7 @@ namespace Recommender.Controllers
         {
             if (ModelState.IsValid)
             {
-                IdentityUser<int> user = await userManager.FindByNameAsync(model.UserName);
+                ApplicationUser user = await userManager.FindByNameAsync(model.UserName);
                 if (user != null)
                 {
                     await signInManager.SignOutAsync();
@@ -80,7 +75,7 @@ namespace Recommender.Controllers
         {
             if (ModelState.IsValid)
             {
-                IdentityUser<int> user = new IdentityUser<int> { Email = model.Email, UserName = model.UserName };
+                ApplicationUser user = new ApplicationUser { Email = model.Email, UserName = model.UserName };
                 var result = await userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
@@ -109,24 +104,6 @@ namespace Recommender.Controllers
             {
                 return RedirectToAction("Index", "Home");
             }
-        }
-
-        public async Task<IActionResult> Profile(string userName)
-        {
-            var user = await userManager.FindByNameAsync(userName);
-            if (user == null) { return NotFound(); }
-
-            var userRates = await userRateRep.GetUserRatesByUser(user.Id).ToListAsync();
-
-            //var movies = await movieRep.Movies.Where(m => userRates.Select(ur => ur.TitleId).Contains(m.Id)).ToListAsync();
-
-            var movies = await movieRep.Movies.Take(10).ToListAsync();
-
-            return View(new ProfileViewModel {
-                User = user,
-                UserRates = userRates,
-                UserMovies = movies
-            });
         }
     }
 }

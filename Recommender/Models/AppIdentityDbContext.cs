@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Recommender.Models
 {
-    public class AppIdentityDbContext : IdentityDbContext<IdentityUser<int>, IdentityRole<int>, int>
+    public class AppIdentityDbContext : IdentityDbContext<ApplicationUser, IdentityRole<int>, int>
     {
         public AppIdentityDbContext(DbContextOptions<AppIdentityDbContext> options) : base(options) { }
     }

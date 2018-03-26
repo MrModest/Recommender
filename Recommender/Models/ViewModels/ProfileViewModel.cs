@@ -8,8 +8,7 @@ namespace Recommender.Models.ViewModels
 {
     public class ProfileViewModel
     {
-        public IdentityUser<int> User { get; set; }
-        public IEnumerable<UserRate> UserRates { get; set; }
-        public IEnumerable<Movie> UserMovies { get; set; }
+        public ApplicationUser User { get; set; }
+        public IEnumerable<UserMovie> UserMovies { get; set; }
     }
 }

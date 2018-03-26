@@ -49,11 +49,12 @@ namespace Recommender.Models
 
         public UserRate Update(UserRate userRate)
         {
-            context.Attach(userRate).State = EntityState.Modified;
             //context.UserRates.Attach(userRate);
             //var entry = context.Entry(userRate);
             //entry.Property(e => e.Score).IsModified = true;
             //entry.Property(e => e.Review).IsModified = true;
+
+            context.UserRates.Update(userRate);
             context.SaveChanges();
 
             return userRate;
@@ -61,14 +62,11 @@ namespace Recommender.Models
 
         public async Task<UserRate> UpdateAsync(UserRate userRate)
         {
-            //context.Attach(userRate).State = EntityState.Modified;
             //context.UserRates.Attach(userRate);
             //var entry = context.Entry(userRate);
             //entry.Property(e => e.Score).IsModified = true;
             //entry.Property(e => e.Review).IsModified = true;
 
-            //var rate = context.UserRates.Find(userRate.Id); //.FirstOrDefault(ur => ur.Id == userRate.Id);
-            //rate.Score = userRate.Score;
             context.UserRates.Update(userRate);
             await context.SaveChangesAsync();
 

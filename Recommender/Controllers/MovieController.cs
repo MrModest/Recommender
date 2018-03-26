@@ -27,12 +27,16 @@ namespace Recommender.Controllers
 
         public async Task<IActionResult> Index()
         {
-            return View(await movieRep.Movies
+            IEnumerable<UserRate> userRates = await User.GetUserRatesAsync(userRateRep);
+
+            IEnumerable<Movie> movies = await movieRep.Movies
                                     .Where(m => m.ReleaseDate.HasValue && m.ReleaseDate.Value.Year > (DateTime.Now.Year - 2))
                                     .Where(m => m.VoteCount > 100)
                                     .OrderByDescending(m => m.VoteAverage)
                                     .Take(10)
-                                    .ToListAsync());
+                                    .ToListAsync();
+
+            return View(movies.GetUserMovies(userRates));
 
             //var movies = repository.Movies
             //                        .Where(m => m.ReleaseDate.HasValue && m.ReleaseDate.Value.Year == DateTime.Now.Year)

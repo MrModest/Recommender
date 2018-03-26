@@ -15,9 +15,9 @@ namespace Recommender.Controllers
     public class UserRateController : Controller
     {
         private IUserRateRepository repository;
-        private UserManager<IdentityUser<int>> userManager;
+        private UserManager<ApplicationUser> userManager;
 
-        public UserRateController(IUserRateRepository repository, UserManager<IdentityUser<int>> userManager)
+        public UserRateController(IUserRateRepository repository, UserManager<ApplicationUser> userManager)
         {
             this.repository = repository;
             this.userManager = userManager;

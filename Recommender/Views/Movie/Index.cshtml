@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Movie>
+﻿@model IEnumerable<UserMovie>
 @{
     ViewData["Title"] = "Home";
 }
@@ -9,8 +9,8 @@
         @foreach (var movie in Model)
         {
             <li>
-                <img src="http://image.tmdb.org/t/p/original/@movie.BackdropPath" alt=" ">
-                <p class='title'>@movie.Title</p><p class='description'>@movie.Overview</p>
+                <img src="http://image.tmdb.org/t/p/original/@movie.Movie.BackdropPath" alt=" ">
+                <p class='title'>@movie.Movie.Title</p><p class='description'>@movie.Movie.Overview</p>
             </li>
         }
     </ul>
