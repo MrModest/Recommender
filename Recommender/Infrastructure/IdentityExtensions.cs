@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Microsoft.EntityFrameworkCore;
 using Recommender.Models;
 using System;
 using System.Collections.Generic;
@@ -35,5 +37,12 @@ namespace Recommender.Infrastructure
             return null;
         }
 
+        public static void AddErrorToModelState(this IEnumerable<IdentityError> errors, ModelStateDictionary modelState)
+        {
+            foreach (var error in errors)
+            {
+                modelState.AddModelError(error.Code, error.Description);
+            }
+        }
     }
 }
