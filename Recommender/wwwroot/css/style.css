@@ -1564,3 +1564,8 @@ h3.head {
     display: inline-flex!important;
 }
 /* /rate stars */
+
+.avatar {
+    max-height: 100px;
+    max-width: 100px;
+}

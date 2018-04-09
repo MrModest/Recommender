@@ -68,8 +68,8 @@ namespace Recommender.Controllers
             {
                 UserName = user.UserName,
                 Email = user.Email,
-                AvatarImageUrl = "~/userfiles/avatars/" + (user.AvatarImagePath ?? "no-avatar.png"),
-                BackgroundImageUrl = "~/userfiles/bg-images/" + (user.BackgroundImagePath ?? "no-bg-image.png")
+                AvatarImageUrl = user.GetAvatarPath(),
+                BackgroundImageUrl = user.GetBgImagePath()
             };
             return View(model);
         }
@@ -100,28 +100,6 @@ namespace Recommender.Controllers
                 user.UserName = model.UserName;
                 user.Email = model.Email;
 
-                //var imgUrl = await UploadImage(model.Avatar);
-                //if (imgUrl == null)
-                //{
-                //    ModelState.AddModelError(model.Avatar.FileName, "Not image or too large image.");
-                //    return View(model);
-                //}
-                //if (imgUrl != String.Empty)
-                //{
-                //    user.AvatarImagePath = imgUrl;
-                //}
-
-                //imgUrl = await UploadImage(model.BackgroundImage);
-                //if (imgUrl == null)
-                //{
-                //    ModelState.AddModelError(model.BackgroundImage.FileName, "Not image or too large image.");
-                //    return View(model);
-                //}
-                //if (imgUrl != String.Empty)
-                //{
-                //    user.BackgroundImagePath = imgUrl;
-                //}
-
                 if (!String.IsNullOrWhiteSpace(model.NewPassword))
                 {
                     var res = await userManager.ChangePasswordAsync(user, model.OldPassword ?? String.Empty, model.NewPassword);
@@ -146,35 +124,16 @@ namespace Recommender.Controllers
             return View(model);
         }
 
-        //private async Task<string> UploadImage(IFormFile image)
-        //{
-        //    if (image == null || image.Length == 0) { return String.Empty; } //Not Edited
-        //    if (!image.ContentType.Contains("image/") || image.Length > 5 * 1024 * 1024) { return null; } //Not image or too large
-
-        //    var filename = $"{User.GetUserId()}.{Path.GetExtension(image.FileName)}";
-        //    var path = $"{hostingEnv.WebRootPath}/userfiles/avatars/{filename}";
-
-        //    if (System.IO.File.Exists(path + ".old")) { System.IO.File.Delete(path); }
-        //    if (System.IO.File.Exists(path)) { System.IO.File.Move(path, path + ".old"); }
-
-        //    using (var fileStream = new FileStream(path, FileMode.Create))
-        //    {
-        //        await image.CopyToAsync(fileStream);
-        //    }
-
-        //    return filename;
-        //}
-
         [Authorize]
         [HttpPost]
-        public async Task<IActionResult> Upload([FromForm]string type, [FromForm]IFormFile file)
+        public async Task<IActionResult> Upload([FromForm]IFormFile file, [FromForm]string type)
         {
-            if (type != "avatar" || type != "bg-image") { return StatusCode(415, new { message = "Type must be 'avatar' or 'bg-image'",  file, type }); }
+            if (type != "avatar" && type != "bg-image") { return StatusCode(415, new { message = "Type must be 'avatar' or 'bg-image'",  file, type }); }
             if (file == null || file.Length == 0) { return NotFound(new { message = "File not found or file size is 0." }); }
             if (!file.ContentType.Contains("image/")) { return StatusCode(415, new { message = "Only image supported" }); }
             if (file.Length > 5 * 1024 * 1024) { return StatusCode(413, new { message = "File size too large. Max size: 5 MB." }); }
 
-            var filename = $"{User.GetUserId()}.{Path.GetExtension(file.FileName)}";
+            var filename = $"{User.GetUserId()}{Path.GetExtension(file.FileName)}";
             var path = $"{hostingEnv.WebRootPath}/userfiles/{type}s/{filename}";
 
             using (var fileStream = new FileStream(path, FileMode.Create))
@@ -190,8 +149,7 @@ namespace Recommender.Controllers
             var result = await userManager.UpdateAsync(user);
             if (result.Succeeded)
             {
-                //return RedirectToAction("Edit", "User");
-                return Json(new { url = $"~/userfiles/{type}s/{filename}" });
+                return Json(new { url = $"/userfiles/{type}s/{filename}" });
             }
             else
             {

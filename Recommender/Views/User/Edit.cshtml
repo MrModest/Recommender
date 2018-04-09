@@ -10,46 +10,20 @@
         <!-- left column -->
         <div class="col-md-3">
             <div class="text-center">
-                <img src="@Model.AvatarImageUrl" class="avatar img-circle" alt="avatar">
+                <img src="@Model.AvatarImageUrl" class="avatar img-circle" alt="@Model.AvatarImageUrl">
                 <h5 style="margin:10px">Загрузить фото..</h5>
+                <input id="upload-file-type" type="hidden" value="avatar" />
+                <input type="hidden" name="model" value='@Json.Serialize(Model)' />
                 <input class="form-control" id="user-avatar" type="file" style="height:auto"> <br />
                 <input id="upload-avatar" type="button" value="Загрузить" />
             </div>
         </div>
-        <script>
-            $('#upload-avatar').click(function (event) {
-                event.preventDefault();
-
-                var formData = new FormData();
-                formData.append('type', 'avatar');
-                formData.append('file', $('#user-avatar')[0].files[0]);
-
-                var _url = '@Url.Action("Upload", "User")';
-
-                $.ajax({
-                    url: _url,
-                    type: 'POST',
-                    data: formData,
-                    processData: false,  // tell jQuery not to process the data
-                    contentType: false,  // tell jQuery not to set contentType
-                    success: function (result) {
-                        $('.avatar').attr('src', result.url);
-                    },
-                    error: function (jqXHR) {
-                        $('.validation-summary-errors').html(jqXHR.statusText)
-                    },
-                    complete: function (jqXHR, status) {
-                    }
-                });
-            });
-        </script>
+        <script src="~/js/upload-avatar-ajax.js"></script>
         <!-- edit form column -->
         <div class="col-md-9 personal-info">
-            <div class="alert alert-info alert-dismissable">
-                <a class="panel-close close" data-dismiss="alert">×</a>
-                <div asp-validation-summary="All"></div>
-                <div class="validation" asp-validation-summary="ModelOnly" />
-            </div>
+            
+            <div asp-validation-summary="All" class="alert alert-warning"></div>
+            <div class="validation" asp-validation-summary="ModelOnly" />
             <h3>Персональное инфо</h3>
 
             <form asp-action="Edit" asp-controller="User" class="form-horizontal" method="post" role="form">
