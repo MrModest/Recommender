@@ -81,14 +81,9 @@ namespace Recommender.Controllers
                 .Take(pagingInfo.ItemsPerPage)
                 .ToListAsync();
 
-            if (movies == null || movies.Count == 0) { return NotFound(); }
+            if (movies == null) { movies = new List<Movie>(); }
 
-            List<UserRate> userRates = null;
-            if (User.Identity.IsAuthenticated)
-            {
-                var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
-                userRates = await userRateRep.GetUserRatesByUser(userId).ToListAsync();
-            }
+            IEnumerable<UserRate> userRates = await User.GetUserRatesAsync(userRateRep);
 
             return View(new MovieOfGenreViewModel {
                 Genre = genre,
@@ -97,6 +92,36 @@ namespace Recommender.Controllers
             });
         }
 
-        public IActionResult Test() => View();
+        public async Task<IActionResult> Search(string query, int page = 1)
+        {
+            var moviesByQuery = movieRep.Movies.Where(m => m.Title.Contains(query) || m.OriginalTitle.Contains(query));
+
+            var count = await moviesByQuery.CountAsync();
+
+            var pagingInfo = new PagingInfo(count, 24, page);
+
+            var movies = await moviesByQuery.
+                OrderByDescending(m => m.Popularity)
+                .Skip((page - 1) * pagingInfo.ItemsPerPage)
+                .Take(pagingInfo.ItemsPerPage)
+                .ToListAsync();
+
+            if (movies == null) { movies = new List<Movie>(); }
+
+            IEnumerable<UserRate> userRates = await User.GetUserRatesAsync(userRateRep);
+
+            return View(new SearchResult
+            {
+                Query = query,
+                Results = movies,
+                PagingInfo = pagingInfo
+            });
+        }
+
+        public async Task<IActionResult> Test() => View(await movieRep.Movies
+                             .Where(m => m.PosterPath != null && m.ReleaseDate.HasValue && m.ReleaseDate.Value.Year == DateTime.Now.Year)
+                             .OrderByDescending(m => m.Popularity)
+                             .Take(10)
+                             .ToListAsync());
     }
 }

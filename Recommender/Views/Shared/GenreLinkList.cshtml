@@ -4,6 +4,11 @@
 <h4>
 @foreach (var genre in Rep.Genres.Where(g => Model.Contains(g.Id)).ToList())
 {
-    <a asp-action="Genre" asp-controller="Movie" asp-route-genreId="@genre.Id" target="_blank" class="label label-default">@genre.RuName</a>  
+    <a asp-action="Genre" asp-controller="Movie" asp-route-genreId="@genre.Id" 
+       target="_blank" 
+       class="label label-default" 
+       style="display:inline-block; margin-bottom:0.2em; margin-top:0.2em">
+        @genre.RuName
+    </a>  
 }
 </h4>

@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27130.2010
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Recommender", "Recommender\Recommender.csproj", "{7BA57924-DB9A-44B9-8BC8-47CB2CF89812}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Recommender", "Recommender\Recommender.csproj", "{7BA57924-DB9A-44B9-8BC8-47CB2CF89812}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Recommender.Tests", "Recommender.Tests\Recommender.Tests.csproj", "{FDA61543-F0C0-40C8-A67F-989EC621BE15}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Recommender.Tests", "Recommender.Tests\Recommender.Tests.csproj", "{FDA61543-F0C0-40C8-A67F-989EC621BE15}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

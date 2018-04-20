@@ -68,9 +68,9 @@
                 <a asp-controller="Movie" asp-action="Index"><h1>Recom<span>mender</span></h1></a>
             </div>
             <div class="w3_search">
-                <form action="#" method="post">
-                    <input type="text" name="Search" placeholder="Search" required="">
-                    <input type="submit" value="Go">
+                <form asp-action="Search" asp-controller="Movie" method="get">
+                    <input type="text" name="query" placeholder="Поиск..." required="">
+                    <input type="submit" value="Поиск">
                 </form>
             </div>
             <div class="w3l_sign_in_register">

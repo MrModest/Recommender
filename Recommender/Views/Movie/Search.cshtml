@@ -1,6 +1,6 @@
-﻿@model IEnumerable<Movie>
+﻿@model SearchResult
 @{
-    ViewData["Title"] = "Search";
+    ViewData["Title"] = Model.Query;
 }
 
 <!-- tables -->
@@ -16,16 +16,16 @@
     <table id="table-breakpoint">
         <thead>
             <tr>
-                <th>Poster</th>
-                <th>Movie Name</th>
-                <th>Year</th>
-                <th>Country</th>
-                <th>Genre</th>
-                <th>Rating</th>
+                <th>Постер</th>
+                <th>Название</th>
+                <th>Год</th>
+                <th>Страны</th>
+                <th>Жанры</th>
+                <th>Оценка</th>
             </tr>
         </thead>
         <tbody>
-            @foreach (var movie in Model)
+            @foreach (var movie in Model.Results)
             {
                 <tr>
                     <td class="w3-list-img">
@@ -42,4 +42,5 @@
             }
         </tbody>
     </table>
+    <div page-model="@Model.PagingInfo" page-action="Search" page-url-query="@Model.Query"></div>
 </div>

@@ -289,7 +289,7 @@ i.glyphicon.glyphicon-play-circle {
     box-shadow: 0px 0px 1px #999;
 }
 h4.latest-text {
-      border-left: 5px solid #ff8d1b;
+    border-left: 5px solid #ff8d1b;
     font-size: 2em;
     color: #212121;
     text-transform: uppercase;
@@ -302,8 +302,8 @@ h4.latest-text-profile {
     font-size: 2em;
     color: #212121;
     text-transform: uppercase;
-    margin-top: 3em;
-    margin-bottom: 1em;
+    margin-top: 1em;
+    margin-bottom: 0.5em;
     padding: 0.3em 0.5em;
 }
 .review-slider {
