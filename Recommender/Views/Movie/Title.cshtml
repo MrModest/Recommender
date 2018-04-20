@@ -1,45 +1,55 @@
-﻿@model Movie
+﻿@model UserMovie
 @{
-    ViewData["Title"] = Model.Title;
+    ViewData["Title"] = Model.Movie.Title;
 }
 
 <div class="container">
     <div class="row">
-        <!--<h2 class="col-xs-12 h2">@Model.Title</h2>
-        <h4 class="col-xs-12 h4">@Model.OriginalTitle</h4>-->
-        <p class="movie-single-capture-main">@Model.Title</p>
-        <p class="movie-single-capture-second">@Model.OriginalTitle</p>
+        <p class="movie-single-capture-main">@Model.Movie.Title</p>
+        <p class="movie-single-capture-second">@Model.Movie.OriginalTitle</p>
+    </div>
+    <div class="row">
+        <stars-block title-id="@Model.Movie.Id"
+                     score="@{(Model.NotRated) ? (int)Math.Round(Model.Movie.VoteAverage) : Model.UserScore}"
+                     default="@Model.NotRated"
+                     rate-action="Rate" rate-controller="UserRate"
+                     delete-action="Delete" delete-controller="UserRate"
+                     style="float:none; margin-left:1em; display:inline-block">
+        </stars-block>
+        <a href="#" id="delete-rate">
+            <i class="fa fa-trash"></i>
+        </a>
     </div>
     <div class="row">
         <div class="col-md-3">
-            <img src="http://image.tmdb.org/t/p/original/@Model.PosterPath" alt="@Model.Title" class="img-responsive" />
+            <img src="http://image.tmdb.org/t/p/original/@Model.Movie.PosterPath" alt="@Model.Movie.Title" class="img-responsive" />
         </div>
         <div class="bs-docs col-md-8">
             <table class="table table-striped">
                 <tbody>
                     <tr>
                         <th>Год</th>
-                        <td>@Model.ReleaseDate?.Year</td>
+                        <td>@Model.Movie.ReleaseDate?.Year</td>
                     </tr>
                     <tr>
                         <th>Страна</th>
-                        <td> @String.Join(", ", Model.ProductionCountries)</td>
+                        <td> @String.Join(", ", Model.Movie.ProductionCountries)</td>
                     </tr>
                     <tr>
                         <th>Слоган</th>
-                        <td>@Model.Tagline</td>
+                        <td>@Model.Movie.Tagline</td>
                     </tr>
                     <tr>
                         <th>Жанры</th>
-                        <td>@Html.Partial("GenreLinkList", Model.Genres)</td>
+                        <td>@Html.Partial("GenreLinkList", Model.Movie.Genres)</td>
                     </tr>
                     <tr>
                         <th>Оценка</th>
-                        <td>@Model.VoteAverage (Проголосовало: @Model.VoteCount)</td>
+                        <td>@Model.Movie.VoteAverage (Проголосовало: @Model.Movie.VoteCount)</td>
                     </tr>
                     <tr>
                         <th>Описание</th>
-                        <td>@Model.Overview</td>
+                        <td>@Model.Movie.Overview</td>
                     <tr>
                 </tbody>
             </table>

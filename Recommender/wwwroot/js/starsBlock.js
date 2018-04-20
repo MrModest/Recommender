@@ -17,7 +17,10 @@ args
     color: chosen color
  */
 function colorStars(rate, starTarget, color) {
-
+	//if (color != COLORS.hovered) {
+	//	console.log("starTarget:");
+	//	console.log(starTarget);
+	//}
 	var stars = starTarget.closest("ul").getElementsByClassName('star-half');
 	var starPathStyle;
 
@@ -80,15 +83,34 @@ $('.star-half').click(function (event) {
 		dataType: 'json',
 		data: JSON.stringify({ "title_id": title_id, "score": score }),
 		success: function (data, statusText, jqXHR) {
-			if (jqXHR.status == "204") {
-				blockStars.setAttribute('data-score', score);
-				blockStars.setAttribute('data-default', false);
-				colorStars(score, event.target, COLORS.rated);
-				console.log('success!');
-			}
-			else {
-				console.log(jqXHR.status + ' : ' + jqXHR.statusText);
-			}
+			blockStars.setAttribute('data-score', score);
+			blockStars.setAttribute('data-default', false);
+			colorStars(score, event.target, COLORS.rated);
+		}
+	});
+});
+
+$('#delete-rate').click(function (event) {
+	event.preventDefault();
+
+	var blockStars = document.getElementsByClassName('block-stars')[0];
+
+	var title_id = blockStars.getAttribute('data-title_id');
+	var url = blockStars.getAttribute('data-delete_url');
+
+	var formData = new FormData();
+	formData.append('titleId', title_id);
+
+	$.ajax({
+		type: 'POST',
+		url: url,
+		data: formData,
+		processData: false,  // tell jQuery not to process the data
+		contentType: false,  // tell jQuery not to set contentType
+		success: function (data, statusText, jqXHR) {
+			blockStars.setAttribute('data-score', data.score);
+			blockStars.setAttribute('data-default', true);
+			colorStars(data.score, $('.star-half-left')[0], COLORS.default);
 		}
 	});
 });

@@ -18,7 +18,7 @@ namespace Recommender.Infrastructure
         {
             foreach (var movie in movies)
             {
-                yield return new UserMovie { Movie = movie, UserScore = userRates?.GetUserRateByMovie(movie.Id)?.Score ?? 0 };
+                yield return new UserMovie(movie, userRates?.GetUserRateByMovie(movie.Id)?.Score ?? 0 );
             }
         }
     }

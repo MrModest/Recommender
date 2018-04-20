@@ -29,6 +29,10 @@ namespace Recommender.Infrastructure
 
         public string RateController { get; set; }
 
+        public string DeleteAction { get; set; }
+
+        public string DeleteController { get; set; }
+
         public int TitleId { get; set; }
 
         public int Score { get; set; }
@@ -42,6 +46,7 @@ namespace Recommender.Infrastructure
             output.TagName = "div";
             output.Attributes.Add("class",         "block-stars");
             output.Attributes.Add("data-rate_url", urlHelper.Action(RateAction, RateController, null));
+            output.Attributes.Add("data-delete_url", urlHelper.Action(DeleteAction, DeleteController, null));
             output.Attributes.Add("data-title_id", TitleId);
             output.Attributes.Add("data-score",    Score);
             output.Attributes.Add("data-default",  Default.ToString().ToLower());

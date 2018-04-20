@@ -61,8 +61,9 @@ namespace Recommender.Controllers
         public async Task<IActionResult> Title(int titleId)
         {
             var movie = await movieRep.Movies.FirstOrDefaultAsync(m => m.Id == titleId);
+            var userRate = await userRateRep.GetUserRateByUserAndTitleAsync(User.GetUserId(), movie.Id);
             if (movie == null) { return NotFound(); }
-            return View(movie);
+            return View(new UserMovie(movie, userRate?.Score ?? 0));
         }
 
         public async Task<IActionResult> Genre(int genreId, int page = 1)

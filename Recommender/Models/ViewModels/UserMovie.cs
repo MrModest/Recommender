@@ -10,5 +10,18 @@ namespace Recommender.Models.ViewModels
         public Movie Movie { get; set; }
         public int UserScore { get; set; }
         public bool NotRated { get { return UserScore == 0; } }
+
+        public UserMovie() { }
+
+        public UserMovie(Movie movie)
+        {
+            Movie = movie;
+        }
+
+        public UserMovie(Movie movie, int score)
+        {
+            Movie = movie;
+            UserScore = score;
+        }
     }
 }

@@ -18,6 +18,9 @@ namespace Recommender.Models
         UserRate Update(UserRate userRate);
         Task<UserRate> UpdateAsync(UserRate userRate);
 
+        UserRate Delete(UserRate userRate);
+        Task<UserRate> DeleteAsync(UserRate userRate);
+
         IQueryable<UserRate> GetUserRatesByUser(int userId);
 
         UserRate GetUserRateByUserAndTitle(int userId, int titleId);

@@ -73,6 +73,24 @@ namespace Recommender.Models
             return userRate;
         }
 
+        //+++ Delete UserRate
+
+        public UserRate Delete(UserRate userRate)
+        {
+            var deletedRate = context.UserRates.Remove(userRate).Entity;
+            context.SaveChanges();
+
+            return deletedRate;
+        }
+
+        public async Task<UserRate> DeleteAsync(UserRate userRate)
+        {
+            var deletedRate = context.UserRates.Remove(userRate).Entity;
+            await context.SaveChangesAsync();
+
+            return deletedRate;
+        }
+
         //+++ Help Methods
 
         public IQueryable<UserRate> GetUserRatesByUser(int userId)

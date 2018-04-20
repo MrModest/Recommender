@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 using Recommender.Models;
 using Recommender.Models.ViewModels;
 
@@ -14,12 +15,14 @@ namespace Recommender.Controllers
     [Authorize]
     public class UserRateController : Controller
     {
-        private IUserRateRepository repository;
+        private IUserRateRepository userRateRep;
+        private IMovieRepository movieRep;
         private UserManager<ApplicationUser> userManager;
 
-        public UserRateController(IUserRateRepository repository, UserManager<ApplicationUser> userManager)
+        public UserRateController(IUserRateRepository userRateRep, IMovieRepository movieRep, UserManager<ApplicationUser> userManager)
         {
-            this.repository = repository;
+            this.userRateRep = userRateRep;
+            this.movieRep = movieRep;
             this.userManager = userManager;
         }
 
@@ -32,19 +35,38 @@ namespace Recommender.Controllers
 
             if (model == null) { return NotFound(); }
 
-            UserRate userRate = await repository.GetUserRateByUserAndTitleAsync(user.Id, model.TitleId);
+            UserRate userRate = await userRateRep.GetUserRateByUserAndTitleAsync(user.Id, model.TitleId);
 
             if (userRate == null || userRate?.Id == 0)
             {
-                await repository.AddAsync(user.Id, model.TitleId, model.Score);
+                await userRateRep.AddAsync(user.Id, model.TitleId, model.Score);
             }
             else
             {
                 userRate.Score = model.Score;
-                await repository.UpdateAsync(userRate);
+                await userRateRep.UpdateAsync(userRate);
             }
             
             return NoContent();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Delete([FromForm][JsonProperty("title_id")] int titleId)
+        {
+            var user = await userManager.GetUserAsync(HttpContext.User);
+
+            if (user == null) { return Unauthorized(); }
+            if (titleId == 0) { return NotFound(new { message = $"Not fount title with id {titleId}" }); }
+
+            UserRate userRate = await userRateRep.GetUserRateByUserAndTitleAsync(user.Id, titleId);
+
+            if (userRate == null) { return NotFound(new { message = $"Not fount user rate for title with id {titleId}" }); }
+
+            await userRateRep.DeleteAsync(userRate);
+
+            var title = await movieRep.Movies.FirstOrDefaultAsync(m => m.Id == titleId);
+
+            return Json(new { score = title.VoteAverage });
         }
     }
 }
