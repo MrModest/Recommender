@@ -20,8 +20,4 @@
     <PackageReference Include="TMDbLib" Version="1.0.0" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\..\PredictionIONet\PredictionIONet\PredictionIONet.csproj" />
-  </ItemGroup>
-
 </Project>
