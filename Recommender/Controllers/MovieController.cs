@@ -29,26 +29,45 @@ namespace Recommender.Controllers
         {
             IEnumerable<UserRate> userRates = await User.GetUserRatesAsync(userRateRep);
 
-            IEnumerable<Movie> movies = await movieRep.Movies
+            var baseRequest = movieRep.Movies
+                                    //.Where(m => !userRates.Select(ur => ur.TitleId).Contains(m.Id))
                                     .Where(m => m.ReleaseDate.HasValue && m.ReleaseDate.Value.Year > (DateTime.Now.Year - 2))
-                                    .Where(m => m.VoteCount > 100)
+                                    .Where(m => m.VoteCount > 100);
+
+            if (userRates != null)
+            {
+                baseRequest = baseRequest.Where(m => !userRates.Select(ur => ur.TitleId).Contains(m.Id));
+            }
+
+            var moviesOnCinema = await baseRequest
+                                    .OrderByDescending(m => m.ReleaseDate)
+                                    .Take(5)
+                                    .ToListAsync();
+
+            var recommendedMovies = await baseRequest
                                     .OrderByDescending(m => m.VoteAverage)
                                     .Take(10)
                                     .ToListAsync();
 
-            return View(movies.GetUserMovies(userRates));
+            recommendedMovies.ForEach(m => m.VoteAverage = 8);
+            recommendedMovies[0].VoteAverage = recommendedMovies[1].VoteAverage = recommendedMovies[2].VoteAverage = 10;
+            recommendedMovies[3].VoteAverage = recommendedMovies[4].VoteAverage = recommendedMovies[5].VoteAverage = 9.6;
 
-            //var movies = repository.Movies
-            //                        .Where(m => m.ReleaseDate.HasValue && m.ReleaseDate.Value.Year == DateTime.Now.Year)
-            //                        .OrderByDescending(m => m.VoteAverage)
-            //                        .Take(10).ToList();
-            //for (int i = 0; i < 10; i++)
-            //{
-            //    movies[i].VoteAverage = i;
-            //}
+            var interestingMovies = await baseRequest
+                                    .Where(m => !recommendedMovies.Select(mv => mv.Id).Contains(m.Id))
+                                    .Where(m => m.VoteAverage >= 7)
+                                    .OrderByDescending(m => m.Popularity)
+                                    .Take(10)
+                                    .ToListAsync();
 
-            //return View(movies);
+            var model = new MovieIndex
+            {
+                MoviesOnCinema = moviesOnCinema.GetUserMovies(userRates),
+                RecommendedMovies = recommendedMovies.GetUserMovies(userRates),
+                InterestingMovies = interestingMovies.GetUserMovies(userRates)
+            };
 
+            return View(model);
         }
 
         public async Task<IActionResult> List() => 

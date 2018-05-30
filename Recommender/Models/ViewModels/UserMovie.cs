@@ -9,6 +9,7 @@ namespace Recommender.Models.ViewModels
     {
         public Movie Movie { get; set; }
         public int UserScore { get; set; }
+        public double PredictedScore { get; set; }
         public bool NotRated { get { return UserScore == 0; } }
 
         public UserMovie() { }
@@ -18,10 +19,10 @@ namespace Recommender.Models.ViewModels
             Movie = movie;
         }
 
-        public UserMovie(Movie movie, int score)
+        public UserMovie(Movie movie, int userScore)
         {
             Movie = movie;
-            UserScore = score;
+            UserScore = userScore;
         }
     }
 }

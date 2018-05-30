@@ -16,6 +16,5 @@ namespace Recommender.Models
         }
 
         public IQueryable<Genre> Genres => context.Genres;
-
     }
 }

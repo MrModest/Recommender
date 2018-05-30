@@ -25,6 +25,7 @@ namespace Recommender
             Configuration = new ConfigurationBuilder()
                                 .SetBasePath(environment.ContentRootPath)
                                 .AddJsonFile("appsettings.json")
+                                .AddJsonFile($"appsettings.{environment.EnvironmentName}.json", true)
                                 .Build();
         }
 
@@ -55,9 +56,9 @@ namespace Recommender
         {
             if (env.IsDevelopment())
             {
-                app.UseDeveloperExceptionPage();
+                
             }
-
+            app.UseDeveloperExceptionPage();
             app.UseStatusCodePages();
             app.UseStaticFiles();
             app.UseSession();

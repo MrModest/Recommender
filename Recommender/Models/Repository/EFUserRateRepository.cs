@@ -1,8 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+using Recommender.Infrastructure;
 
 namespace Recommender.Models
 {
@@ -24,6 +25,8 @@ namespace Recommender.Models
             context.UserRates.Add(userRate);
             context.SaveChanges();
 
+            //Prediction.RateItem(userRate.UserId, userRate.TitleId, userRate.Score);
+
             return userRate;
         }
 
@@ -31,6 +34,8 @@ namespace Recommender.Models
         {
             context.UserRates.Add(userRate);
             await context.SaveChangesAsync();
+
+            //await Prediction.RateItemAsync(userRate.UserId, userRate.TitleId, userRate.Score);
 
             return userRate;
         }
@@ -49,26 +54,20 @@ namespace Recommender.Models
 
         public UserRate Update(UserRate userRate)
         {
-            //context.UserRates.Attach(userRate);
-            //var entry = context.Entry(userRate);
-            //entry.Property(e => e.Score).IsModified = true;
-            //entry.Property(e => e.Review).IsModified = true;
-
             context.UserRates.Update(userRate);
             context.SaveChanges();
+
+            //Prediction.RateItem(userRate.UserId, userRate.TitleId, userRate.Score);
 
             return userRate;
         }
 
         public async Task<UserRate> UpdateAsync(UserRate userRate)
         {
-            //context.UserRates.Attach(userRate);
-            //var entry = context.Entry(userRate);
-            //entry.Property(e => e.Score).IsModified = true;
-            //entry.Property(e => e.Review).IsModified = true;
-
             context.UserRates.Update(userRate);
             await context.SaveChangesAsync();
+
+            //await Prediction.RateItemAsync(userRate.UserId, userRate.TitleId, userRate.Score);
 
             return userRate;
         }
@@ -80,6 +79,8 @@ namespace Recommender.Models
             var deletedRate = context.UserRates.Remove(userRate).Entity;
             context.SaveChanges();
 
+            //Prediction.DeleteItemRate(userRate.UserId, userRate.TitleId);
+
             return deletedRate;
         }
 
@@ -87,6 +88,8 @@ namespace Recommender.Models
         {
             var deletedRate = context.UserRates.Remove(userRate).Entity;
             await context.SaveChangesAsync();
+
+            //await Prediction.DeleteItemRateAsync(userRate.UserId, userRate.TitleId);
 
             return deletedRate;
         }

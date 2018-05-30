@@ -11,6 +11,5 @@ namespace Recommender.Models
 
         IQueryable<Movie> GetMoviesByGenre(Genre genre);
         IQueryable<Movie> GetMoviesByGenre(int genreId);
-
     }
 }

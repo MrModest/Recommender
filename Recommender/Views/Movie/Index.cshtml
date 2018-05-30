@@ -1,4 +1,4 @@
-﻿@model IEnumerable<UserMovie>
+﻿@model MovieIndex
 @{
     ViewData["Title"] = "Home";
 }
@@ -6,7 +6,7 @@
 <!-- banner -->
 <div id="slidey" style="display:none;">
     <ul>
-        @foreach (var movie in Model)
+        @foreach (var movie in Model.MoviesOnCinema)
         {
             <li>
                 <img src="http://image.tmdb.org/t/p/original/@movie.Movie.BackdropPath" alt=" ">
@@ -33,7 +33,7 @@
     <div class="container">
         <div class="w3_agile_banner_bottom_grid">
             <div id="owl-demo" class="owl-carousel owl-theme">
-                @foreach (var movie in Model)
+                @foreach (var movie in Model.RecommendedMovies)
                 {
                     @Html.Partial("MovieInCarouselBlock", movie)
                 }
@@ -48,7 +48,7 @@
     <div class="container">
         <div class="w3_agile_banner_bottom_grid">
             <div id="owl-demo-2" class="owl-carousel owl-theme">
-                @foreach (var movie in Model)
+                @foreach (var movie in Model.InterestingMovies)
                 {
                     @Html.Partial("MovieInCarouselBlock", movie)
                 }
