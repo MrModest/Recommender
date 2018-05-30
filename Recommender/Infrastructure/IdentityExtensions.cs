@@ -15,7 +15,7 @@ namespace Recommender.Infrastructure
 
         public static int GetUserId(this ClaimsPrincipal user)
         {
-            if (user == null) { return -1; }
+            if (user == null || !user.Identity.IsAuthenticated) { return -1; }
             //if (int.TryParse(user.FindFirst(ClaimTypes.NameIdentifier).Value, out int userId))
             //{
             //    return userId;
